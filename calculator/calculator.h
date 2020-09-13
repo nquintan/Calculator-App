@@ -23,5 +23,9 @@ private slots:
     void MathButtons();
     void EqualButton();
     void ChangeNumberSign();
+    void Clear();
+    void Memory();
+    void MemoryAdd();
+    void MemoryClear();
 };
 #endif // CALCULATOR_H

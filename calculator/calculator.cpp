@@ -2,6 +2,7 @@
 #include "ui_calculator.h"
 
 double calcValue = 0.0;
+double memoryVal = 0.0;
 bool divTrigger = false;
 bool multTrigger = false;
 bool addTrigger = false;
@@ -27,6 +28,11 @@ calculator::calculator(QWidget *parent)
     connect(ui->Multiply, SIGNAL(released()), this, SLOT(MathButtons()));
     connect(ui->Equals, SIGNAL(released()), this, SLOT(EqualButton()));
     connect(ui->ChangeSign, SIGNAL(released()), this, SLOT(ChangeNumberSign()));
+    connect(ui->Clear, SIGNAL(released()), this, SLOT(Clear()));
+
+    connect(ui->Memory, SIGNAL(released()), this, SLOT(Memory()));
+    connect(ui->MemoryAdd, SIGNAL(released()), this, SLOT(MemoryAdd()));
+    connect(ui->MemoryClear, SIGNAL(released()), this, SLOT(MemoryClear()));
 
 }
 
@@ -36,7 +42,6 @@ calculator::~calculator()
 }
 
 void calculator::NumPress() {
-
     QPushButton *button = (QPushButton *)sender();
     QString butVal = button->text();
     QString displayVal = ui->Display->text();
@@ -91,7 +96,6 @@ void calculator::EqualButton() {
 }
 
 void calculator::ChangeNumberSign() {
-
     QString displayVal = ui->Display->text();
     QRegExp reg ("[-]?[0-9.]*");
     if(reg.exactMatch(displayVal)) {
@@ -100,4 +104,22 @@ void calculator::ChangeNumberSign() {
         ui->Display->setText(QString::number(dblDisplayValSign));
     }
 
+}
+
+void calculator::Clear() {
+    ui->Display->setText("");
+}
+
+
+void calculator::Memory() {
+    ui->Display->setText(QString::number(memoryVal));
+}
+
+void calculator::MemoryAdd() {
+    QString tempValue = ui->Display->text();
+    memoryVal = tempValue.toDouble();
+}
+
+void calculator::MemoryClear() {
+    memoryVal = 0.0;
 }
